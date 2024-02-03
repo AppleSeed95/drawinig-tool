@@ -421,16 +421,6 @@ export default {
       this.stage.batchDraw();
     },
 
-    mouseup: function (event) {
-      if (event.touches && event.touches.length !== 2) {
-        // タッチ操作の終了時に初期値をリセット
-        this.initialDistance = null;
-        this.initialPointerPositions = null;
-        this.initialStagePositions = null;
-      }
-      this.isPaint = false;
-    },
-
     // 現在のモードが指定されたモードと一致するかどうか
     isTargetMode: function (targetMode) {
       return this.mode === targetMode;
