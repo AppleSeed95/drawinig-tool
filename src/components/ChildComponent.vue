@@ -436,6 +436,35 @@ export default {
       return this.mode === targetMode;
     },
 
+    onUndo: function () {
+      if (this.undoDataStack.length <= 0) {
+        return;
+      }
+
+      this.redoDataStack.push(
+        this.context.getImageData(0, 0, this.canvas.width, this.canvas.height)
+      );
+
+      // 元に戻す（戻す配列からキャンバスの状態を取り出して反映）
+      this.context.putImageData(this.undoDataStack.pop(), 0, 0);
+      this.drawingLayer.draw();
+    },
+
+    onRedo: function () {
+      if (this.redoDataStack.length <= 0) {
+        return;
+      }
+
+      // やり直す前の状態を戻す配列に保存
+      this.undoDataStack.push(
+        this.context.getImageData(0, 0, this.canvas.width, this.canvas.height)
+      );
+
+      // やり直す（やり直し配列からキャンバスの状態を取り出して反映）
+      this.context.putImageData(this.redoDataStack.pop(), 0, 0);
+      this.drawingLayer.draw();
+    },
+
     onClearCanvas: function () {
       this.undoDataStack.push(
         this.context.getImageData(0, 0, this.canvas.width, this.canvas.height)
