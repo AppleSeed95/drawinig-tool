@@ -423,6 +423,7 @@ export default {
 
     mouseup: function (event) {
       if (event.touches && event.touches.length !== 2) {
+        // タッチ操作の終了時に初期値をリセット
         this.initialDistance = null;
         this.initialPointerPositions = null;
         this.initialStagePositions = null;
@@ -430,6 +431,7 @@ export default {
       this.isPaint = false;
     },
 
+    // 現在のモードが指定されたモードと一致するかどうか
     isTargetMode: function (targetMode) {
       return this.mode === targetMode;
     },
@@ -443,6 +445,7 @@ export default {
         this.context.getImageData(0, 0, this.canvas.width, this.canvas.height)
       );
 
+      // 元に戻す（戻す配列からキャンバスの状態を取り出して反映）
       this.context.putImageData(this.undoDataStack.pop(), 0, 0);
       this.drawingLayer.draw();
     },
